@@ -334,7 +334,10 @@
   <main id="conteudo">
   <!-- ======================== HERO ======================== -->
   <section class="hero">
-    <div class="hero-bg"></div>
+    <div class="hero-bg" aria-hidden="true">
+      <div class="hero-ambient"><img src="hero-ambiente.webp" srcset="hero-ambiente-900.webp 900w, hero-ambiente.webp 1600w" sizes="(max-width: 820px) 100vw, 64vw" alt="" width="1600" height="894"></div>
+      <div class="hero-light"></div>
+    </div>
 
     <div class="hero-inner">
       <header class="hero-header">
@@ -434,7 +437,10 @@
 
     <div class="problems-inner">
       <div class="problems-img-col">
-        <img src="simbolo.svg" loading="lazy" decoding="async" width="260" height="230" class="problems-img" alt="">
+        <picture>
+          <source srcset="coluna.webp" type="image/webp">
+          <img src="coluna.png" loading="lazy" decoding="async" width="441" height="377" class="problems-img" alt="Silhueta de uma pessoa com a coluna vertebral destacada, com dor nas costas e no pescoço">
+        </picture>
       </div>
 
       <h2 class="problems-headline">Os problemas<br>mais comuns<br>na coluna</h2>
@@ -799,7 +805,7 @@
   <section class="profile-block" id="sobre">
     <div class="profile-inner">
       <div class="profile-media">
-        <img src="perfil.webp" loading="lazy" decoding="async" width="1000" height="1241" alt="Dr. Geovane Santiago, fisioterapeuta, sorrindo no consultório" class="profile-image">
+        <img src="perfil.webp" loading="lazy" decoding="async" width="1000" height="1250" alt="Dr. Geovane Santiago, fisioterapeuta, sorrindo no consultório" class="profile-image">
       </div>
 
       <div class="profile-content">
