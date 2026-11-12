@@ -1,13 +1,5 @@
 /* ===== FONTES (self-host, variáveis) ===== */
 @font-face {
-  font-family: 'Syne';
-  src: url('fonts/syne.woff2') format('woff2');
-  font-weight: 400 800;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
   font-family: 'DM Sans';
   src: url('fonts/dm-sans.woff2') format('woff2');
   font-weight: 100 1000;
@@ -29,7 +21,7 @@
   --ease-out:   cubic-bezier(0.22, 1, 0.36, 1);
   --shadow-soft: 0 4px 12px rgba(22, 35, 59, 0.025), 0 16px 40px rgba(22, 35, 59, 0.055);
   --gray-bg:    #F7F2EB;
-  --font-display: 'Syne', 'DM Sans', system-ui, sans-serif;
+  --font-display: 'DM Sans', system-ui, sans-serif;
   --grad-start: #2B3E63;
   --grad-end:   #16233B;
   --gradient:   linear-gradient(110deg, var(--grad-start), var(--grad-end));
@@ -2767,13 +2759,13 @@ body::-webkit-scrollbar-thumb:hover {
 
 /* =====================================================================
    CAMADA DR. GEOVANE SANTIAGO
-   Ajustes da identidade (marinho + cobre + areia, Syne + DM Sans)
+   Ajustes da identidade (marinho + cobre + areia, DM Sans)
    sobre a estrutura herdada.
    ===================================================================== */
 
 body { color: var(--texto); }
 
-/* Títulos em Syne: mais larga que a serifa antiga, então os tamanhos caem um pouco */
+/* Família e espaçamento dos títulos (tamanhos finais no bloco "TÍTULOS EM DM SANS") */
 .hero-left h1,
 .intro-left h2,
 .treatment-title,
@@ -3160,3 +3152,65 @@ body { color: var(--texto); }
 .nowrap { white-space: nowrap; }
 
 .reviews-block { border-top: 1px solid rgba(238, 230, 218, 0.08); }
+
+/* ===== TÍTULOS EM DM SANS =====
+   Títulos de seção na mesma família do texto. A parte em cobre usa o mesmo peso
+   da parte em marinho, para a largura das letras não mudar dentro do título. */
+.hero-left h1,
+.intro-left h2,
+.treatment-title,
+.card h3,
+.problems-headline,
+.condition-title,
+.reviews-title,
+.profile-title,
+.faq-title,
+.contact-title,
+.review-modal__title {
+  font-weight: 700;
+  letter-spacing: -0.025em;
+}
+
+.hero .gradient-text,
+.intro-left h2 strong,
+.condition-title strong,
+.reviews-title strong { font-weight: 700; }
+
+.hero-left h1 { font-size: 52px; line-height: 1.08; }
+.intro-left h2 { font-size: 38px; }
+.treatment-title { font-size: 46px; }
+.condition-title { font-size: 40px; }
+.reviews-title { font-size: 42px; }
+.profile-title { font-size: 44px; }
+.faq-title { font-size: 44px; }
+.contact-title { font-size: 52px; }
+.card h3 { font-size: 23px; }
+.problems-headline { font-size: 28px; }
+.card::before,
+.profile-highlights strong { font-weight: 700; letter-spacing: -0.02em; }
+
+@media (max-width: 1100px) {
+  .hero-left h1 { font-size: 44px; }
+}
+
+@media (max-width: 820px) {
+  .hero-left h1 { font-size: 42px; }
+  .intro-left h2 { font-size: 32px; }
+  .treatment-title, .faq-title, .reviews-title { font-size: 36px; }
+  .condition-title { font-size: 33px; }
+  .profile-title { font-size: 38px; }
+}
+
+@media (max-width: 480px) {
+  .hero-left h1 { font-size: 35px; }
+  .intro-left h2 { font-size: 29px; }
+  .treatment-title, .faq-title, .reviews-title { font-size: 31px; }
+  .condition-title { font-size: 29px; }
+  .profile-title { font-size: 32px; }
+  .contact-title { font-size: 38px; }
+  .problems-headline { font-size: 26px; }
+}
+
+@media (max-width: 360px) {
+  .hero-left h1 { font-size: 31px; }
+}
