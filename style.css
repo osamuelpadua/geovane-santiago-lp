@@ -3580,5 +3580,72 @@ body { color: var(--texto); }
 .hero-bg::after {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncR type='linear' slope='3' intercept='-1'/%3E%3CfeFuncG type='linear' slope='3' intercept='-1'/%3E%3CfeFuncB type='linear' slope='3' intercept='-1'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
   mix-blend-mode: overlay;
-  opacity: 0.9;
+  opacity: 0.55;
+}
+
+/* ===== INTRODUÇÃO (desktop): título em 3 linhas, parágrafo em até 4 ===== */
+@media (min-width: 821px) {
+  .intro-block { padding: 72px 0; }
+
+  .intro-inner {
+    max-width: 1200px;
+    grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
+    gap: 0;
+    align-items: stretch;
+  }
+
+  .intro-left {
+    display: flex;
+    align-items: center;
+    padding-right: clamp(32px, 4vw, 64px);
+  }
+
+  .intro-left h2 {
+    max-width: none;
+    font-size: clamp(36px, 3.3vw, 46px);
+    line-height: 1.06;
+    letter-spacing: -0.03em;
+  }
+
+  .intro-left h2 span,
+  .intro-left h2 strong { display: block; }
+
+  /* filete cobre separando título e texto */
+  .intro-right {
+    display: flex;
+    align-items: center;
+    padding-left: clamp(32px, 4.5vw, 72px);
+    border-left: 2px solid rgba(194, 112, 61, 0.55);
+  }
+
+  .intro-right p {
+    max-width: none;
+    font-size: clamp(16.5px, 1.3vw, 18.5px);
+    line-height: 1.7;
+    color: var(--texto);
+  }
+}
+
+@media (max-width: 820px) {
+  .intro-left h2 span,
+  .intro-left h2 strong { display: inline; }
+}
+
+/* tablet em paisagem: colunas mais equilibradas para manter 3 + 4 linhas */
+@media (min-width: 821px) and (max-width: 1000px) {
+  .intro-inner { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); padding: 0 32px; }
+  .intro-left { padding-right: 24px; }
+  .intro-left h2 { font-size: 32px; }
+  .intro-right { padding-left: 28px; }
+  .intro-right p { font-size: 15.5px; line-height: 1.65; }
+}
+
+/* até 900px a introdução empilha (título em cima, texto embaixo) */
+@media (min-width: 821px) and (max-width: 900px) {
+  .intro-inner { grid-template-columns: 1fr; gap: 20px; padding: 0 40px; }
+  .intro-left { padding-right: 0; }
+  .intro-left h2 { font-size: 34px; }
+  .intro-left h2 span, .intro-left h2 strong { display: inline; }
+  .intro-right { padding-left: 0; border-left: 0; }
+  .intro-right p { font-size: 17px; }
 }
