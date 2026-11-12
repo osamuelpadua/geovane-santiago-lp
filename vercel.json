@@ -1,0 +1,28 @@
+{
+  "cleanUrls": true,
+  "rewrites": [
+    {
+      "source": "/bio",
+      "destination": "/links"
+    },
+    {
+      "source": "/bio/",
+      "destination": "/links"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "has": [{ "type": "host", "value": ".*\\.vercel\\.app" }],
+      "headers": [{ "key": "X-Robots-Tag", "value": "noindex" }]
+    },
+    {
+      "source": "/fonts/(.*)",
+      "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }]
+    },
+    {
+      "source": "/(.*)\\.(webp|jpg|png|svg|ico)",
+      "headers": [{ "key": "Cache-Control", "value": "public, max-age=2592000" }]
+    }
+  ]
+}
