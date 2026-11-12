@@ -3371,3 +3371,214 @@ body { color: var(--texto); }
   .hero-header { padding-top: 28px; }
   .doctor-img { max-width: 330px; }
 }
+
+/* ===== HERO: foto ampliada, da cintura para cima =====
+   A foto passa da base do hero; o overflow do .hero corta a parte de baixo. */
+.doctor-img {
+  height: 1000px;
+  bottom: -230px;
+  transform: translateX(-36%);
+}
+
+.hero .stamp-wrapper { top: 80px; left: calc(50% + 215px); }
+
+@media (max-width: 1100px) {
+  .doctor-img { height: 860px; bottom: -200px; }
+  .hero .stamp-wrapper { top: 70px; left: calc(50% + 200px); }
+}
+
+@media (max-width: 820px) {
+  /* no celular a foto flui no documento; corta a parte de baixo dentro da coluna da foto */
+  .hero-right { overflow: hidden; }
+  .doctor-img {
+    bottom: auto;
+    transform: none;
+    width: 100%;
+    height: auto;
+    max-width: 460px;
+    margin-bottom: -24%;
+  }
+  .hero .stamp-wrapper { top: 8px; right: 4px; left: auto; }
+}
+
+@media (max-width: 480px) {
+  .doctor-img { max-width: 400px; }
+}
+
+@media (max-width: 480px) {
+  .hero-kicker { font-size: 10.5px; letter-spacing: 0.12em; gap: 8px; }
+  .hero-kicker::before { display: none; }
+}
+
+/* ===== HERO mais baixo (760px), mesmo enquadramento da foto ===== */
+.hero { height: 760px; }
+.doctor-img { height: 890px; bottom: -205px; }
+.hero .stamp-wrapper { top: 60px; }
+
+@media (max-width: 1100px) {
+  .doctor-img { height: 790px; bottom: -180px; }
+  .hero .stamp-wrapper { top: 60px; }
+}
+
+@media (max-width: 820px) {
+  .hero { height: auto; }
+  .doctor-img { height: auto; bottom: auto; }
+  .hero .stamp-wrapper { top: 8px; }
+}
+
+/* ===== Afasta a lâmpada do fundo da cabeça do doutor ===== */
+.doctor-img { transform: translateX(-26%); }
+.hero-ambient img { object-position: 78% 50%; }
+
+@media (max-width: 820px) {
+  .doctor-img { transform: none; }
+  .hero-ambient img { object-position: 20% 50%; }
+  /* escurece a base do hero inteiro, sem emenda ao lado da foto */
+  .hero-bg::before {
+    background: linear-gradient(180deg, rgba(11, 19, 34, 0.55) 0%, rgba(11, 19, 34, 0) 22%, rgba(11, 19, 34, 0) 82%, #0B1322 100%);
+  }
+}
+
+/* ===== Foto do doutor um pouco mais alta ===== */
+.doctor-img { bottom: -150px; }
+
+@media (max-width: 1100px) {
+  .doctor-img { bottom: -135px; }
+}
+
+@media (max-width: 820px) {
+  .doctor-img { bottom: auto; }
+}
+
+/* ===== Selo do hero menor, livre da cabeça ===== */
+@media (min-width: 821px) {
+  .hero .stamp-wrapper { width: 140px; height: 140px; top: 34px; left: calc(50% + 232px); }
+  .hero .stamp-txt { width: 140px; height: 140px; }
+  .hero .stamp-iso { width: 72px; height: 72px; }
+}
+
+@media (min-width: 821px) and (max-width: 1100px) {
+  .hero .stamp-wrapper { width: 120px; height: 120px; top: 40px; left: calc(50% + 190px); }
+  .hero .stamp-txt { width: 120px; height: 120px; }
+  .hero .stamp-iso { width: 62px; height: 62px; }
+}
+
+/* ===== HERO: ajustes finais de enquadramento ===== */
+.hero { height: 820px; }
+
+/* foto com mais zoom, mais alta e um pouco mais à esquerda */
+.doctor-img { height: 1010px; bottom: -250px; transform: translateX(-36%); }
+
+/* selo no canto superior direito da tela, fora do rosto.
+   O .hero-right termina no limite do container (1280px - 60px de respiro);
+   o cálculo leva o selo até ~70px da borda da janela. */
+@media (min-width: 821px) {
+  .hero .stamp-wrapper {
+    top: -62px;
+    left: auto;
+    right: min(10px, calc(10px - (100vw - 1280px) / 2));
+  }
+}
+
+/* grão discreto sobre o fundo */
+.hero-bg::after {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.95' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 160px 160px;
+  mix-blend-mode: overlay;
+  opacity: 0.16;
+}
+
+@media (max-width: 1100px) {
+  .doctor-img { height: 900px; bottom: -210px; }
+}
+
+@media (max-width: 820px) {
+  .hero { height: auto; }
+  .doctor-img { height: auto; bottom: auto; transform: none; }
+}
+
+/* ===== Doutor mais à esquerda, com mais zoom ===== */
+.doctor-img { height: 1100px; bottom: -320px; transform: translateX(-46%); }
+
+@media (max-width: 1100px) {
+  .doctor-img { height: 960px; bottom: -260px; transform: translateX(-42%); }
+}
+
+@media (max-width: 820px) {
+  .doctor-img { height: auto; bottom: auto; transform: none; }
+}
+
+/* ===== Isotipo do selo maior: ocupa o miolo do anel ===== */
+.stamp-iso,
+.hero .stamp-iso { width: 100%; height: 100%; }
+
+/* grão um pouco mais presente, ainda discreto */
+.hero-bg::after { opacity: 0.32; }
+
+/* ===== Rodapé: texto de direitos reservados em uma linha só ===== */
+.site-footer-inner { max-width: 1180px; }
+.site-footer-copy { white-space: nowrap; }
+
+@media (max-width: 760px) {
+  .site-footer-copy { font-size: clamp(9.5px, 2.55vw, 13px); letter-spacing: -0.01em; }
+}
+
+/* ===== Faixa de introdução: título à esquerda, parágrafo à direita ===== */
+.intro-block { padding: 64px 0; min-height: 0; }
+
+.intro-inner {
+  max-width: 1200px;
+  padding: 0 48px;
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  gap: clamp(32px, 6vw, 96px);
+  align-items: center;
+}
+
+.intro-left { flex: none; }
+
+.intro-left h2 {
+  font-size: clamp(32px, 3.4vw, 46px);
+  line-height: 1.08;
+  max-width: 11em;
+}
+
+/* "sem dor" na mesma linha do resto do título, só muda a cor */
+.intro-left h2 strong { display: inline; }
+
+.intro-right p {
+  font-size: 19px;
+  line-height: 1.7;
+  max-width: 34em;
+}
+
+@media (max-width: 820px) {
+  .intro-block { padding: 48px 0; }
+  .intro-inner { grid-template-columns: 1fr; gap: 20px; padding: 0 28px; }
+  .intro-left h2 { max-width: none; font-size: 32px; }
+  .intro-right p { font-size: 17px; max-width: none; }
+}
+
+@media (max-width: 480px) {
+  .intro-inner { padding: 0 24px; }
+  .intro-left h2 { font-size: 29px; }
+  .intro-right p { font-size: 16px; }
+}
+
+@media (max-width: 820px) {
+  .intro-left h2,
+  .intro-left { text-align: left; margin-left: 0; margin-right: 0; }
+}
+
+/* rodapé no celular: o texto escala com a largura da tela para caber em uma linha */
+@media (max-width: 760px) {
+  .site-footer-inner { padding-inline: 8px; }
+  .site-footer-copy { font-size: clamp(8px, calc((100vw - 16px) / 38.8), 13px); letter-spacing: 0; }
+}
+
+/* ===== Grão do hero: mais contraste no ruído, ainda discreto ===== */
+.hero-bg::after {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncR type='linear' slope='3' intercept='-1'/%3E%3CfeFuncG type='linear' slope='3' intercept='-1'/%3E%3CfeFuncB type='linear' slope='3' intercept='-1'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+  mix-blend-mode: overlay;
+  opacity: 0.9;
+}
