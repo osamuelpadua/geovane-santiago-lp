@@ -3775,3 +3775,25 @@ body { color: var(--texto); }
 @media (max-width: 820px) {
   .hero-spine { left: 52%; opacity: 0.17; }
 }
+
+/* coluna um pouco mais para a esquerda */
+.hero-spine { left: 52%; }
+
+@media (max-width: 1100px) {
+  .hero-spine { left: 53%; }
+}
+
+@media (max-width: 820px) {
+  .hero-spine { left: 50%; }
+}
+
+/* doutor um pouco mais alto, mesmo tamanho */
+.doctor-img { bottom: -290px; }
+
+@media (max-width: 1100px) {
+  .doctor-img { bottom: -228px; }
+}
+
+@media (max-width: 820px) {
+  .doctor-img { bottom: auto; }
+}
