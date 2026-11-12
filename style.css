@@ -4014,3 +4014,9 @@ body { color: var(--texto); }
 }
 
 .glass::before { opacity: 0.7; }
+
+/* foto original termina no quadril: dissolve a base para não marcar um corte atrás do vidro */
+.doctor-img {
+  -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 76%, transparent 88%);
+  mask-image: linear-gradient(180deg, #000 0%, #000 76%, transparent 88%);
+}
