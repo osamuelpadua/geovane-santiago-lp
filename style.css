@@ -3857,3 +3857,160 @@ body { color: var(--texto); }
     );
   }
 }
+
+/* ===== Headline do hero em 3 linhas ===== */
+@media (min-width: 821px) {
+  .hero-left h1 { font-size: clamp(36px, 2.9vw, 44px); line-height: 1.08; }
+  .hero-left h1 .h1-l { display: block; white-space: nowrap; }
+}
+
+@media (min-width: 821px) and (max-width: 1100px) {
+  .hero-left h1 { font-size: 34px; }
+}
+
+/* ===== Logo do hero 1,2x maior ===== */
+.logo { height: 45.6px; }
+
+@media (max-width: 820px) {
+  .logo { height: auto; width: min(276px, 80%); }
+}
+
+@media (max-width: 480px) {
+  .logo { height: auto; width: min(240px, 74%); }
+}
+
+/* headline um pouco maior (3 linhas cabem na coluna de 560px) */
+@media (min-width: 1101px) {
+  .hero-left h1 { font-size: clamp(38px, 3.3vw, 50px); }
+}
+
+/* =====================================================================
+   HERO BAR (vidro)
+   Faixa "Volte a se movimentar sem dor" sobre a base do hero, em vidro,
+   como a .hero-bar.glass do Vitor Fantoni. O .hero-inner mantém 820px,
+   então foto, selo e texto não mudam de lugar; a foto passa da base do
+   .hero-inner e continua por trás do vidro, desfocada.
+   ===================================================================== */
+.hero {
+  height: auto;
+  flex-direction: column;
+}
+
+.hero-inner {
+  height: 820px;
+  flex: none;
+}
+
+/* a vinheta escura agora ficaria no meio do corpo; o vidro faz a transição */
+.hero-right::after { display: none; }
+
+.glass {
+  position: relative;
+  isolation: isolate;
+  background: linear-gradient(180deg, rgba(246, 248, 251, 0.085) 0%, rgba(246, 248, 251, 0.035) 100%);
+  -webkit-backdrop-filter: blur(28px) saturate(165%);
+  backdrop-filter: blur(28px) saturate(165%);
+  box-shadow: 0 -18px 40px -24px rgba(0, 0, 0, 0.5);
+  border-top: 1px solid rgba(238, 230, 218, 0.12);
+}
+
+/* reflexo de luz atravessando o vidro (tons da marca) */
+.glass::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    linear-gradient(100deg, rgba(255, 255, 255, 0) 18%, rgba(255, 255, 255, 0.055) 34%, rgba(255, 255, 255, 0) 50%),
+    radial-gradient(70% 160% at 8% -60%, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0) 55%),
+    radial-gradient(50% 140% at 100% 130%, rgba(74, 111, 165, 0.14) 0%, rgba(74, 111, 165, 0) 60%),
+    radial-gradient(40% 120% at 70% 120%, rgba(212, 137, 90, 0.08) 0%, rgba(212, 137, 90, 0) 60%);
+}
+
+@supports not ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
+  .glass { background: rgba(22, 35, 59, 0.82); }
+}
+
+.hero-bar {
+  position: relative;
+  z-index: 3;
+  width: 100%;
+}
+
+.hero-bar-inner {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 50px 60px;
+  display: grid;
+  grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
+  align-items: center;
+}
+
+.hero-bar-title {
+  padding-right: clamp(32px, 4vw, 64px);
+  font-family: var(--font-display);
+  font-size: clamp(32px, 2.8vw, 42px);
+  font-weight: 700;
+  line-height: 1.06;
+  letter-spacing: -0.03em;
+  color: #FFFFFF;
+  text-wrap: balance;
+}
+
+.hero-bar-title span,
+.hero-bar-title strong { display: block; }
+.hero-bar-title strong { color: var(--cobre-claro); font-weight: 700; }
+
+.hero-bar-text {
+  padding-block: 6px;
+  padding-left: clamp(32px, 4.5vw, 72px);
+  border-left: 2px solid rgba(212, 137, 90, 0.55);
+  font-size: clamp(16px, 1.25vw, 18px);
+  line-height: 1.7;
+  color: rgba(238, 230, 218, 0.86);
+}
+
+.hero-bar-text strong { color: #FFFFFF; font-weight: 600; }
+
+@media (max-width: 1100px) {
+  .hero-bar-inner { padding: 40px 40px; }
+  .hero-bar-title { font-size: 32px; padding-right: 28px; }
+  .hero-bar-text { font-size: 15.5px; padding-left: 28px; }
+}
+
+/* tablet estreito: título em cima, texto embaixo */
+@media (max-width: 900px) {
+  .hero-bar-inner { grid-template-columns: 1fr; gap: 16px; padding: 36px 40px 40px; }
+  .hero-bar-title { padding-right: 0; font-size: 30px; }
+  .hero-bar-title span,
+  .hero-bar-title strong { display: inline; }
+  .hero-bar-text { padding-left: 0; border-left: 0; font-size: 16px; }
+}
+
+/* celular: a faixa sobe e sobrepõe a base do retrato */
+@media (max-width: 820px) {
+  .hero-inner { height: auto; }
+  .hero-bar { margin-top: -70px; }
+  .hero-bar-inner { padding: 30px 24px 36px; }
+  .hero-bar-title { font-size: 28px; text-align: left; }
+  .hero-bar-text { font-size: 15.5px; text-align: left; }
+}
+
+/* vidro um pouco menos fosco: a silhueta do doutor aparece por trás da faixa */
+.glass {
+  -webkit-backdrop-filter: blur(14px) saturate(150%);
+  backdrop-filter: blur(14px) saturate(150%);
+}
+
+/* vidro: menos desfoque, véu claro mais leve e faixa mais escura */
+.glass {
+  background:
+    linear-gradient(180deg, rgba(246, 248, 251, 0.05) 0%, rgba(246, 248, 251, 0.02) 100%),
+    linear-gradient(180deg, rgba(11, 19, 34, 0.42) 0%, rgba(11, 19, 34, 0.58) 100%);
+  -webkit-backdrop-filter: blur(10px) saturate(140%);
+  backdrop-filter: blur(10px) saturate(140%);
+}
+
+.glass::before { opacity: 0.7; }

@@ -349,11 +349,11 @@
         <div class="hero-left">
           <span class="hero-kicker">Hérnia de disco · Ciático · Dor na coluna</span>
           <h1>
-            Fisioterapeuta focado no tratamento de <span class="gradient-text">dor na coluna vertebral</span>
+            <span class="h1-l">Fisioterapia especializada</span> <span class="h1-l">no tratamento da</span> <span class="h1-l gradient-text">coluna vertebral</span>
           </h1>
 
           <p class="subtext">
-            Alívio da dor, recuperação dos movimentos e um tratamento focado na causa, para você voltar à sua rotina com mais qualidade de vida.
+            Alívio da dor nas costas, recuperação dos movimentos e um tratamento focado na causa da dor, para você voltar à sua rotina com mais qualidade de vida.
           </p>
 
           <a href="https://wa.me/5514996093713?text=Ol%C3%A1%2C%20Dr.%20Geovane!%20Vim%20pelo%20site%20e%20gostaria%20de%20agendar%20uma%20avalia%C3%A7%C3%A3o." class="btn-cta" target="_blank" rel="noopener">
@@ -372,19 +372,12 @@
         </div>
       </div>
     </div>
-  </section>
 
-  <!-- ======================== INTRO ======================== -->
-  <section class="intro-block">
-    <div class="intro-inner">
-      <div class="intro-left">
-        <h2><span>Volte a</span> <span>se movimentar</span> <strong>sem dor</strong></h2>
-      </div>
-
-      <div class="intro-right">
-        <p>
-          Com foco no tratamento da coluna, o Dr. Geovane atua no alívio da dor e na recuperação dos movimentos de forma segura. O atendimento é <strong>individualizado e busca a causa do problema</strong>, para gerar uma melhora duradoura e devolver leveza, confiança e qualidade de vida.
-        </p>
+    <!-- faixa de vidro sobre a base do hero (referência: hero do Vitor Fantoni) -->
+    <div class="hero-bar glass">
+      <div class="hero-bar-inner">
+        <h2 class="hero-bar-title"><span>Volte a</span> <span>se movimentar</span> <strong>sem dor</strong></h2>
+        <p class="hero-bar-text">Com foco no tratamento da coluna, o Dr. Geovane atua no alívio da dor e na recuperação dos movimentos de forma segura. O atendimento é <strong>individualizado e busca a causa do problema</strong>, para gerar uma melhora duradoura e devolver leveza, confiança e qualidade de vida.</p>
       </div>
     </div>
   </section>
@@ -1447,8 +1440,8 @@
 
     (function () {
       var revealGroups = [
-        { selector: '.intro-left', effect: 'left' },
-        { selector: '.intro-right', effect: 'right' },
+        { selector: '.hero-bar-title', effect: 'up' },
+        { selector: '.hero-bar-text', effect: 'up', delay: 80 },
         { selector: '.treatment-header', effect: 'up' },
         { selector: '.cards-grid .card', effect: 'zoom', stagger: 90 },
         { selector: '.treatment-footer', effect: 'up', delay: 140 },
