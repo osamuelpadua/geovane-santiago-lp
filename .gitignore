@@ -1,5 +1,7 @@
 node_modules/
 .vercel
+.clasp.json
+.clasprc.json
 .DS_Store
 Thumbs.db
 

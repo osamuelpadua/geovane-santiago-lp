@@ -7,7 +7,6 @@
 
   var CONFIG = window.AGENDAR_CONFIG || {};
   var FONE = CONFIG.whatsapp || '5514996093713';
-  var WEBHOOK = CONFIG.webhook || ''; // opcional: URL (Google Apps Script etc.) que recebe o lead em JSON
 
   var raiz = dialog.querySelector('.ag-body');
   var barra = document.getElementById('ag-bar');
@@ -17,6 +16,9 @@
   var resp = {};
   var ultimoGatilho = null;
   var temporizador = null;
+  var tentativaAtual = 0;
+  var envioId = '';
+  document.getElementById('ag-wa').addEventListener('click', function () { clearInterval(temporizador); });
 
   function push(obj) {
     try { window.dataLayer = window.dataLayer || []; window.dataLayer.push(obj); } catch (e) {}
@@ -36,6 +38,7 @@
     else dialog.removeAttribute('open');
   }
   dialog.addEventListener('close', function () {
+    tentativaAtual++;
     document.documentElement.classList.remove('ag-aberto');
     clearInterval(temporizador);
     if (ultimoGatilho && ultimoGatilho.focus) ultimoGatilho.focus();
@@ -60,6 +63,7 @@
   }
 
   function reiniciar() {
+    tentativaAtual++;
     clearInterval(temporizador);
     pilha = [];
     resp = {};
@@ -68,6 +72,10 @@
     ['ag-in-outra', 'ag-in-nome', 'ag-in-whats'].forEach(function (id) { document.getElementById(id).value = ''; });
     document.getElementById('ag-erro-whats').textContent = '';
     document.getElementById('ag-opening').classList.remove('done');
+    document.getElementById('ag-wa').removeAttribute('href');
+    document.getElementById('ag-wa').setAttribute('aria-disabled', 'true');
+    document.getElementById('ag-retry').hidden = true;
+    envioId = '';
     tela('ag-local');
   }
 
@@ -195,57 +203,76 @@
     return l.join('\n');
   }
 
-  function salvar(dados, pronto) {
-    if (!WEBHOOK) { pronto(); return; }
-    var feito = false;
-    function fim() { if (!feito) { feito = true; pronto(); } }
-    try {
-      fetch(WEBHOOK, { method: 'POST', mode: 'no-cors', keepalive: true, headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(dados) })
-        .then(fim, fim);
-    } catch (e) { fim(); }
-    setTimeout(fim, 4000); // não prende o paciente se a planilha demorar
-  }
-
   function concluir() {
     var url = 'https://api.whatsapp.com/send/?phone=' + FONE + '&text=' + encodeURIComponent(mensagem()) + '&type=phone_number&app_absent=0';
-    document.getElementById('ag-wa').href = url;
-    var nm = primeiroNome();
-    document.getElementById('ag-fim-t').textContent = nm ? 'Tudo certo, ' + nm + '. Vamos falar no WhatsApp?' : 'Tudo certo. Vamos falar no WhatsApp?';
-    tela('ag-fim');
-
-    // sem respostas de saúde nem dados pessoais no dataLayer
-    push({ event: 'lead_contato' });
-
-    var segundos = 3, salvo = false, contou = false;
+    var link = document.getElementById('ag-wa');
+    var repetir = document.getElementById('ag-retry');
     var alvo = document.getElementById('ag-timer');
     var caixa = document.getElementById('ag-opening');
-    alvo.textContent = 'Abrindo em 3…';
-    caixa.classList.remove('done');
-    function abrirWhats() {
-      if (!(salvo && contou)) return;
-      alvo.textContent = 'Se não abrir sozinho, toque no botão acima';
-      caixa.classList.add('done');
-      window.location.href = url;
-    }
-    salvar({
-      nome: resp.nome || '',
-      whatsapp: resp.whats || '',
-      atendimento: resp['ag-local'] || '',
-      queixa: queixa(),
-      tratamento: resp['ag-trat'] || '',
-      particular: resp['ag-part'] || '',
-      pagina: location.href,
-      data: new Date().toISOString()
-    }, function () { salvo = true; abrirWhats(); });
+    var tituloFim = document.getElementById('ag-fim-t');
+    var tentativa = ++tentativaAtual;
+    envioId = envioId || (window.crypto && window.crypto.randomUUID
+      ? window.crypto.randomUUID()
+      : String(Date.now()) + '-' + Math.random().toString(36).slice(2) + Math.random().toString(36).slice(2));
+    btWhats.disabled = true;
+    link.removeAttribute('href');
+    link.setAttribute('aria-disabled', 'true');
+    repetir.hidden = true;
+    var nm = primeiroNome();
+    tituloFim.textContent = 'Só um instante. Estamos registrando suas respostas.';
+    tela('ag-fim');
 
-    clearInterval(temporizador);
-    temporizador = setInterval(function () {
-      segundos--;
-      if (segundos > 0) { alvo.textContent = 'Abrindo em ' + segundos + '…'; return; }
-      clearInterval(temporizador);
-      contou = true;
-      if (!salvo) alvo.textContent = 'Só um instante…';
-      abrirWhats();
-    }, 1000);
+    alvo.textContent = 'Registrando suas respostas…';
+    caixa.classList.remove('done');
+    function salvar() {
+      repetir.hidden = true;
+      tituloFim.textContent = 'Só um instante. Estamos registrando suas respostas.';
+      alvo.textContent = 'Registrando suas respostas…';
+      caixa.classList.remove('done');
+      fetch('/api/lead', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          envioId: envioId,
+          nome: resp.nome || '',
+          whatsapp: resp.whats || '',
+          atendimento: resp['ag-local'] || '',
+          queixa: queixa(),
+          tratamento: resp['ag-trat'] || '',
+          particular: resp['ag-part'] || '',
+          pagina: location.href
+        })
+      }).then(function (resposta) {
+        if (!resposta.ok) throw new Error('Falha ao registrar');
+        return resposta.json();
+      }).then(function (resultado) {
+        if (!resultado.ok || resultado.envioId !== envioId) throw new Error('Registro não confirmado');
+        if (tentativa !== tentativaAtual) return;
+        link.href = url;
+        link.removeAttribute('aria-disabled');
+        tituloFim.textContent = nm ? 'Tudo certo, ' + nm + '. Vamos falar no WhatsApp?' : 'Tudo certo. Vamos falar no WhatsApp?';
+        caixa.classList.add('done');
+        push({ event: 'lead_contato' }); // sem respostas de saúde nem dados pessoais no dataLayer
+        var segundos = 3;
+        alvo.textContent = 'Abrindo em 3…';
+        clearInterval(temporizador);
+        temporizador = setInterval(function () {
+          if (tentativa !== tentativaAtual) { clearInterval(temporizador); return; }
+          segundos--;
+          if (segundos > 0) { alvo.textContent = 'Abrindo em ' + segundos + '…'; return; }
+          clearInterval(temporizador);
+          alvo.textContent = 'Se não abrir sozinho, toque no botão acima';
+          window.location.href = url;
+        }, 1000);
+      }).catch(function () {
+        if (tentativa !== tentativaAtual) return;
+        caixa.classList.add('done');
+        tituloFim.textContent = 'Não conseguimos registrar suas respostas.';
+        alvo.textContent = 'Toque em tentar novamente para continuar.';
+        repetir.hidden = false;
+      });
+    }
+    repetir.onclick = salvar;
+    salvar();
   }
 })();

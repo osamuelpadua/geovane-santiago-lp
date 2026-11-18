@@ -260,6 +260,10 @@ textarea.ag-field { min-height: 120px; resize: vertical; line-height: 1.5; }
   box-shadow: 0 6px 18px rgba(154, 86, 48, 0.2);
 }
 .ag-cta svg { width: 16px; height: 16px; }
+.ag-cta[aria-disabled="true"] { opacity: 0.5; pointer-events: none; cursor: not-allowed; }
+.ag-retry { display: block; margin: 16px auto 0; padding: 10px 14px; border: 1px solid var(--cobre); border-radius: 8px; background: transparent; color: var(--cobre-texto); font: inherit; font-weight: 700; cursor: pointer; }
+.ag-retry[hidden] { display: none; }
+.ag-retry:focus-visible { outline: 2px solid var(--cobre); outline-offset: 2px; }
 .ag-opening { display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 16px; font-size: 13.5px; color: var(--muted); }
 .ag-opening p { margin: 0; font-size: inherit; }
 .ag-spin {

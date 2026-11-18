@@ -1195,7 +1195,7 @@
           <label class="ag-flabel" for="ag-in-whats">WhatsApp com DDD</label>
           <input class="ag-field" id="ag-in-whats" type="tel" inputmode="tel" autocomplete="tel-national" placeholder="(14) 91234-5678" maxlength="16">
           <p class="ag-erro" id="ag-erro-whats" aria-live="polite"></p>
-          <p class="ag-lgpd">Usamos seus dados só para falar com você sobre o agendamento.</p>
+          <p class="ag-lgpd">Registramos suas respostas, inclusive a queixa e o tratamento anterior, para falar com você sobre o agendamento.</p>
           <div class="ag-nav"><button type="button" class="ag-back" data-back>Voltar</button><button type="button" class="ag-next" id="ag-bt-whats" disabled>Continuar</button></div>
         </section>
 
@@ -1205,10 +1205,11 @@
             <div class="ag-end-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div>
             <h2 id="ag-fim-t">Tudo certo. Vamos falar no WhatsApp?</h2>
             <p>Suas respostas já vão junto na mensagem, então o consultório não precisa perguntar tudo de novo. É só conferir a agenda com você.</p>
-            <a class="ag-cta" id="ag-wa" href="#" target="_blank" rel="noopener">Falar no WhatsApp
+            <a class="ag-cta" id="ag-wa" aria-disabled="true" target="_blank" rel="noopener">Falar no WhatsApp
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
             </a>
             <div class="ag-opening" id="ag-opening" aria-live="polite"><span class="ag-spin" aria-hidden="true"></span><p id="ag-timer">Abrindo em 3…</p></div>
+            <button type="button" class="ag-retry" id="ag-retry" hidden>Tentar novamente</button>
           </div>
         </section>
 
@@ -1759,8 +1760,7 @@
       yearEl.textContent = new Date().getFullYear();
     })();
   </script>
-  <!-- webhook: URL opcional que recebe cada lead em JSON (ex.: Google Apps Script). Vazio = só abre o WhatsApp. -->
-  <script>window.AGENDAR_CONFIG = { whatsapp: '5514996093713', webhook: '' };</script>
+  <script>window.AGENDAR_CONFIG = { whatsapp: '5514996093713' };</script>
   <script src="agendar.js" defer></script>
 </body>
 </html>
