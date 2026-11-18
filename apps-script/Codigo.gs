@@ -16,11 +16,46 @@ function prepararPlanilha() {
   var aba = planilha.getSheetByName(NOME_ABA) || planilha.insertSheet(NOME_ABA);
   if (aba.getLastRow() === 0) {
     aba.appendRow(COLUNAS);
-    aba.getRange(1, 1, 1, COLUNAS.length).setFontWeight('bold');
-    aba.getRange('D:D').setNumberFormat('@');
-    aba.setFrozenRows(1);
+    estilizarPlanilha();
   }
   return aba;
+}
+
+/** Formatação da aba de leads, sem alterar as respostas registradas. */
+function estilizarPlanilha() {
+  var planilha = SpreadsheetApp.getActiveSpreadsheet();
+  var aba = planilha.getSheetByName(NOME_ABA);
+  if (!aba) throw new Error('A aba Leads não foi encontrada.');
+  var cabecalho = aba.getRange(1, 1, 1, COLUNAS.length);
+  var valores = cabecalho.getValues()[0];
+  if (COLUNAS.some(function (nome, indice) { return valores[indice] !== nome; })) {
+    throw new Error('O cabeçalho da aba Leads foi alterado; nenhuma formatação foi aplicada.');
+  }
+
+  cabecalho.setBackground('#E9EEF3').setFontColor('#17233B')
+    .setFontWeight('bold').setVerticalAlignment('middle')
+    .setWrapStrategy(SpreadsheetApp.WrapStrategy.WRAP);
+  cabecalho.setBorder(null, null, true, null, null, null,
+    '#C8D2DC', SpreadsheetApp.BorderStyle.SOLID);
+  aba.setRowHeight(1, 46);
+  aba.setTabColor('#A56540');
+  aba.setFrozenRows(1);
+  aba.setFrozenColumns(4);
+
+  [90, 150, 190, 165, 205, 330, 235, 225, 340]
+    .forEach(function (largura, indice) { aba.setColumnWidth(indice + 1, largura); });
+  aba.getRange('B2:B').setNumberFormat('dd/MM/yyyy HH:mm');
+  aba.getRange('D:D').setNumberFormat('@');
+  aba.getRange('F:G').setWrapStrategy(SpreadsheetApp.WrapStrategy.WRAP);
+  aba.getRange('I:I').setWrapStrategy(SpreadsheetApp.WrapStrategy.CLIP);
+  aba.getRange(2, 1, aba.getMaxRows() - 1, COLUNAS.length)
+    .setVerticalAlignment('top');
+  if (!aba.getFilter()) aba.getRange('A:I').createFilter();
+  if (!aba.isColumnHiddenByUser(1)) aba.hideColumns(1);
+  SpreadsheetApp.flush();
+  return { ok: true, aba: NOME_ABA, linhas: aba.getLastRow(),
+    filtro: !!aba.getFilter(), colunasCongeladas: aba.getFrozenColumns(),
+    idOculto: aba.isColumnHiddenByUser(1) };
 }
 
 function doPost(e) {
